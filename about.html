@@ -22,7 +22,7 @@
 
     /* --- HERO SECTION --- */
     .about-hero {
-      padding: 70px 0 60px;
+      padding: clamp(40px, 7vw, 70px) 0 clamp(36px, 6vw, 60px);
       background: var(--bg2, #f8f9fc);
       border-bottom: 1px solid var(--border, #e5e7eb);
       position: relative;
@@ -33,7 +33,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 28px;
+      gap: clamp(20px, 4vw, 28px);
       text-align: center;
     }
 
@@ -41,32 +41,38 @@
       .about-hero-inner {
         display: grid;
         grid-template-columns: auto 1fr;
-        gap: 60px;
-        /* gap lebih besar agar text tidak mepet foto */
+        gap: clamp(36px, 5vw, 60px);
         align-items: center;
         text-align: left;
       }
     }
 
     /* --- PROFILE WRAPPER (FOTO KIRI) --- */
-    /* Efek sama seperti index.html: rounded rectangle + border loading + glow + naik */
     .about-hero .profile-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 30px 10px;
+      padding: clamp(20px, 4vw, 30px) clamp(6px, 2vw, 10px);
       position: relative;
       flex-shrink: 0;
-      transform: translateY(-20px);
+      transform: translateY(-10px);
+      width: 100%;
+    }
+
+    @media (min-width: 720px) {
+      .about-hero .profile-wrapper {
+        transform: translateY(-20px);
+        width: auto;
+      }
     }
 
     /* Frame foto: rounded rectangle + animasi mengambang */
     .about-hero .profile-frame {
       position: relative;
       width: 100%;
-      max-width: 320px;
+      max-width: clamp(240px, 70vw, 320px);
       aspect-ratio: 16 / 10;
-      border-radius: 24px;
+      border-radius: clamp(16px, 3vw, 24px);
       overflow: hidden;
       background: var(--card-bg, #fff);
       z-index: 1;
@@ -85,12 +91,12 @@
         0 12px 28px rgba(0, 0, 0, 0.1);
     }
 
-    /* Cincin gradient berputar (loading keliling foto) */
+    /* Cincin gradient berputar */
     .about-hero .profile-frame::before {
       content: '';
       position: absolute;
-      inset: -6px;
-      border-radius: 30px;
+      inset: clamp(-5px, -1vw, -6px);
+      border-radius: inherit;
       background: conic-gradient(from 0deg,
           var(--c1),
           var(--c2),
@@ -104,12 +110,11 @@
       opacity: 0.9;
     }
 
-    /* Cincin kedua: gradient lebih tipis berputar berlawanan arah */
     .about-hero .profile-frame::after {
       content: '';
       position: absolute;
-      inset: -3px;
-      border-radius: 28px;
+      inset: clamp(-3px, -0.6vw, -3px);
+      border-radius: inherit;
       background: conic-gradient(from 180deg,
           var(--c3),
           var(--c2),
@@ -129,8 +134,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 85%;
-      height: 85%;
+      width: min(85%, 340px);
+      height: min(85%, 340px);
       background: radial-gradient(ellipse at center,
           rgba(78, 205, 196, 0.35) 0%,
           rgba(255, 107, 107, 0.25) 40%,
@@ -150,10 +155,9 @@
       object-fit: cover;
       object-position: center;
       display: block;
-      border-radius: 20px;
+      border-radius: inherit;
       position: relative;
       z-index: 2;
-      animation: none;
     }
 
     /* Placeholder fallback */
@@ -164,13 +168,13 @@
       background: linear-gradient(135deg, var(--c1), var(--c2), var(--c3));
       align-items: center;
       justify-content: center;
-      font-size: 5rem;
+      font-size: clamp(3rem, 10vw, 5rem);
       color: white;
-      border-radius: 20px;
+      border-radius: inherit;
       z-index: 2;
     }
 
-    /* Keyframes khusus about page */
+    /* Keyframes */
     @keyframes profileFloat {
 
       0%,
@@ -220,47 +224,61 @@
     /* Ukuran foto di berbagai breakpoint */
     @media (min-width: 480px) {
       .about-hero .profile-frame {
-        max-width: 360px;
+        max-width: clamp(280px, 60vw, 360px);
       }
     }
 
     @media (min-width: 720px) {
       .about-hero .profile-frame {
-        max-width: 380px;
+        max-width: clamp(320px, 40vw, 380px);
       }
     }
 
-    /* --- TEXT KANAN (DIGESER SEDIKIT KE KANAN) --- */
+    @media (min-width: 1200px) {
+      .about-hero .profile-frame {
+        max-width: 420px;
+      }
+    }
+
+    /* Mobile kecil: pastikan foto tidak terlalu besar */
+    @media (max-width: 380px) {
+      .about-hero .profile-frame {
+        max-width: 86vw;
+        aspect-ratio: 4 / 3;
+      }
+    }
+
+    /* --- TEXT KANAN --- */
     .about-hero-text {
       padding-left: 0;
+      width: 100%;
     }
 
     @media (min-width: 720px) {
       .about-hero-text {
         padding-left: 20px;
-        /* geser text ke kanan dikit */
       }
     }
 
     @media (min-width: 1024px) {
       .about-hero-text {
         padding-left: 40px;
-        /* lebih lega di desktop */
       }
     }
 
     .about-hero-text h1 {
-      font-size: clamp(1.35rem, 5vw, 2.4rem);
+      font-size: clamp(1.25rem, 5vw, 2.4rem);
       font-weight: 800;
       letter-spacing: -1px;
       margin-bottom: 8px;
+      line-height: 1.25;
     }
 
     .about-hero-text p {
       color: var(--text2, #6b7280);
-      font-size: clamp(0.85rem, 3vw, 0.95rem);
+      font-size: clamp(0.82rem, 2.8vw, 0.95rem);
       line-height: 1.7;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       max-width: 580px;
     }
 
@@ -270,6 +288,7 @@
       gap: 8px;
       flex-wrap: wrap;
       justify-content: center;
+      margin-top: 8px;
     }
 
     @media (min-width: 720px) {
@@ -279,7 +298,7 @@
     }
 
     .hero-tags .tag {
-      font-size: clamp(0.72rem, 2.5vw, 0.82rem);
+      font-size: clamp(0.68rem, 2.4vw, 0.82rem);
       padding: 4px 10px;
       white-space: nowrap;
     }
@@ -343,7 +362,7 @@
       line-height: 1.65;
     }
 
-    /* --- TIMELINE ZIG-ZAG (DESKTOP) & LURUS (MOBILE) --- */
+    /* --- TIMELINE --- */
     .timeline-wrapper {
       max-width: 900px;
       margin: 0 auto;
@@ -626,31 +645,29 @@
       margin: clamp(32px, 5vw, 60px) 0 !important;
     }
 
-    /* --- RESPONSIVE MOBILE (FOTO TETAP EFEK) --- */
+    /* --- MOBILE: kurangi animasi agar ringan --- */
     @media (max-width: 719px) {
-      .about-hero .profile-wrapper {
-        transform: translateY(-10px);
-        padding: 24px 8px;
-      }
-
       .about-hero .profile-frame {
-        max-width: 300px;
-        border-radius: 20px;
+        animation-duration: 6s;
       }
 
       .about-hero .profile-frame::before {
-        inset: -5px;
-        border-radius: 26px;
+        filter: blur(5px);
       }
 
-      .about-hero .profile-frame::after {
-        inset: -2px;
-        border-radius: 22px;
+      .about-hero .profile-wrapper::before {
+        filter: blur(40px);
       }
+    }
 
-      .about-hero .profile-img,
-      .about-hero .profile-placeholder {
-        border-radius: 16px;
+    /* --- Prefer reduced motion --- */
+    @media (prefers-reduced-motion: reduce) {
+
+      .about-hero .profile-frame,
+      .about-hero .profile-frame::before,
+      .about-hero .profile-frame::after,
+      .about-hero .profile-wrapper::before {
+        animation: none !important;
       }
     }
   </style>
@@ -715,7 +732,7 @@
       <div class="container">
         <div class="about-hero-inner fade-up">
 
-          <!-- Profile Image (efek sama seperti index.html) -->
+          <!-- Profile Image -->
           <div class="profile-wrapper">
             <div class="profile-frame">
               <img src="images/Kami.jpeg" alt="Aurelius Santotinus Agung, S.Pd." class="profile-img"
@@ -726,7 +743,7 @@
             </div>
           </div>
 
-          <!-- Text Content (digeser ke kanan) -->
+          <!-- Text Content -->
           <div class="about-hero-text">
             <div class="about-badge">
               <div class="badge">
@@ -738,8 +755,31 @@
               Aurelius S. Agung, <span class="gradient-text">S.Pd., Gr</span>
             </h1>
             <p>
-              Merupakan alumnus dari universitas Sanata Dharma Yogyakarta, jurusan Pendidikan Bahasa Inggris (English Language Education Study Program/ELESP). Ia memilih jalur pengabdian di daerah Terdepan, Terluar, dan
-              Tertinggal (3T). Telah mengajar di SMP Negeri Pulau Tiga selama hampir 3 tahun dan tetap terus mengabdi untul generasi emas Papua, khususnya anak-anak Asmat yang memiliki talenta yang luar biasa.
+              Aurelius S. Agung, S.Pd., Gr. merupakan alumnus Program Studi Pendidikan Bahasa Inggris (English Language
+              Education
+              Study Program/ELESP) Universitas Sanata Dharma Yogyakarta. Berbekal ilmu dan semangat pelayanan yang ia
+              peroleh
+              selama menempuh pendidikan, ia memilih untuk mengabdikan diri di daerah Terdepan, Terluar, dan Tertinggal
+              (3T) —
+              sebuah pilihan yang jauh dari kemewahan, namun sarat akan makna dan tantangan.
+            </p>
+            <p>
+              Selama hampir tiga tahun, ia mengajar di SMP Negeri Pulau Tiga, sebuah sekolah yang berdiri di wilayah
+              terpencil
+              dengan segala keterbatasannya. Di sana, ia tidak hanya hadir sebagai pengajar bahasa Inggris, tetapi juga
+              sebagai
+              sahabat, pembimbing, dan motivator bagi para peserta didiknya. Keterbatasan fasilitas, akses, dan sumber
+              daya tidak
+              pernah menyurutkan langkahnya untuk terus memberikan pendidikan terbaik bagi anak-anak di pelosok negeri.
+            </p>
+            <p>
+              Hingga kini, ia terus berbakti bagi generasi emas Papua — khususnya anak-anak Asmat yang memiliki talenta
+              luar
+              biasa. Baginya, setiap anak berhak mendapatkan kesempatan yang sama untuk bermimpi dan meraih cita-cita,
+              tak peduli
+              seberapa jauh mereka dari pusat kota. Dedikasi dan ketulusannya menjadi bukti nyata bahwa pendidikan
+              adalah jembatan
+              menuju masa depan yang lebih cerah bagi seluruh anak Indonesia.
             </p>
             <div class="hero-tags">
               <span class="tag"><i class="fas fa-graduation-cap" style="margin-right:5px;"></i>S.Pd. Bahasa
@@ -796,7 +836,7 @@
 
         <div class="divider"></div>
 
-        <!-- TIMELINE ZIG-ZAG (DESKTOP) & LURUS (MOBILE) -->
+        <!-- TIMELINE -->
         <div class="timeline-wrapper fade-up">
           <p class="section-label" style="text-align:center;margin-bottom:12px;">Perjalanan</p>
           <h2 class="section-title" style="text-align:center;margin-bottom:40px;">
@@ -832,7 +872,7 @@
               <div class="timeline-dot" style="background:linear-gradient(135deg,var(--c3),var(--c4));"></div>
               <div class="timeline-card">
                 <div class="timeline-label" style="color:#f59e0b;">Berkembang</div>
-                <h4>2+ Tahun Mengajar & Mengabdi</h4>
+                <h4>3 Tahun Mengajar & Mengabdi</h4>
                 <p>Terus berdedikasi mendidik siswa-siswi Pulau Tiga, membangun literasi bahasa Inggris di tengah
                   keterbatasan sarana prasarana.</p>
               </div>
@@ -876,6 +916,7 @@
     </section>
 
   </div>
+
   <!-- ===== FOOTER ===== -->
   <footer style="border-top: 1px solid var(--border); background: var(--bg2);">
     <div class="container">
@@ -895,19 +936,6 @@
           </p>
         </div>
 
-        <!-- <div>
-                        <h4 style="font-size: 0.85rem; font-weight: 700; margin-bottom: 10px;" data-i18n="footer_phone">
-                            Telepon / WhatsApp</h4>
-                        <p style="font-size: 0.78rem; color: var(--text2); line-height: 1.8; margin: 0;">
-                            <i class="fab fa-whatsapp" style="color: var(--c1); width: 16px;"></i>
-                            Tata Usaha: 08218887004
-                        </p>
-                        <p style="font-size: 0.78rem; color: var(--text2); line-height: 1.8; margin: 4px 0 0;">
-                            <i class="fab fa-whatsapp" style="color: var(--c1); width: 16px;"></i>
-                            Kesiswaan: 085691296762
-                        </p>
-                    </div> -->
-
         <div>
           <h4 style="font-size: 0.85rem; font-weight: 700; margin-bottom: 10px;" data-i18n="footer_institution">
             Institusi</h4>
@@ -924,7 +952,8 @@
             Kami</h4>
           <div style="display: flex; gap: 10px; margin-top: 4px;">
 
-            <a href="https://www.facebook.com/yantho.rundy6" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+            <a href="https://www.facebook.com/yantho.rundy6" target="_blank" rel="noopener noreferrer"
+              aria-label="Facebook"
               style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--border); color: var(--text2); text-decoration: none; font-size: 0.95rem; transition: all .25s ease;"
               onmouseover="this.style.background='#1877F2';this.style.color='#fff';this.style.borderColor='#1877F2';this.style.transform='translateY(-2px)';"
               onmouseout="this.style.background='var(--card-bg)';this.style.color='var(--text2)';this.style.borderColor='var(--border)';this.style.transform='translateY(0)';">
